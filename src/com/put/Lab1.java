@@ -1,5 +1,6 @@
 package com.put;
 
+import javax.xml.datatype.DatatypeConstants;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -8,13 +9,15 @@ import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
-public class Main {
+@SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "SameParameterValue", "MismatchedReadAndWriteOfArray", "ComparatorResultComparison"})
+public class Lab1 {
 
     private static final long TIME_DIVIDER = 1000 * 1000;
     private static final int SIZE = 10000000;
@@ -60,7 +63,7 @@ public class Main {
         return System.nanoTime() - startTime;
     }
 
-    public static void ex1() {
+    private static void ex1() {
         final long tableTime = createTable(SIZE);
         final long arrayListTime = createArrayList(SIZE);
         final long arrayListCapacityTime = createArrayListWithCapacity(SIZE);
@@ -78,6 +81,7 @@ public class Main {
         System.out.println(linkedListTime / TIME_DIVIDER + UNIT);
     }
 
+
     private static String scientificNotation(BigInteger i) {
         NumberFormat formatter = new DecimalFormat("0.######E0", DecimalFormatSymbols.getInstance(Locale.ROOT));
         return formatter.format(new BigDecimal(i));
@@ -86,12 +90,13 @@ public class Main {
     private static long factorial(BigInteger number) {
         final long startTime = System.nanoTime();
         BigInteger result = BigInteger.ONE;
-        for (BigInteger i = BigInteger.ZERO; i.compareTo(number) == -1; i = i.add(BigInteger.ONE)) {
+        for (BigInteger i = BigInteger.ZERO; i.compareTo(number) == DatatypeConstants.LESSER; i = i.add(BigInteger.ONE)) {
             result = result.multiply(i.add(BigInteger.ONE));
         }
         System.out.println(scientificNotation(result));
         return System.nanoTime() - startTime;
     }
+
 
     private static void ex2() {
         System.out.println("---------- Exercise 2 ----------");
@@ -99,6 +104,7 @@ public class Main {
         final long time = factorial(BigInteger.valueOf(10000));
         System.out.println(time / TIME_DIVIDER + UNIT);
     }
+
 
     private static void ex3() {
         System.out.println("---------- Exercise 3 ----------");

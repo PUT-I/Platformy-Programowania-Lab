@@ -24,7 +24,7 @@ public class CoffeeMain {
 
             CoffeeDao dao = new CoffeeDao();
             Scanner in = new Scanner(System.in);
-            switch (in.nextLine()) {
+            switch (in.nextLine().toLowerCase()) {
                 case "a": {
                     System.out.println("Please enter coffee name : ");
                     String name = in.nextLine();

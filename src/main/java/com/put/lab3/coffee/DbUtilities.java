@@ -1,5 +1,6 @@
 package com.put.lab3.coffee;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
@@ -7,6 +8,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("WeakerAccess")
 public class DbUtilities {
 
     private static final String SQL_ESCAPE_CHARS = "[\\\\%_]";
@@ -54,7 +56,11 @@ public class DbUtilities {
             if (dataSource != null) {
                 return dataSource;
             }
-            dataSource = new DriverManagerDataSource(url, username, password);
+            MysqlDataSource mysqlDataSource = new MysqlDataSource();
+            mysqlDataSource.setURL(url);
+            mysqlDataSource.setUser(username);
+            mysqlDataSource.setPassword(password);
+            dataSource = mysqlDataSource;
         } finally {
             LOCK.unlock();
         }

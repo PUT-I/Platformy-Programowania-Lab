@@ -1,11 +1,10 @@
 package com.put.lab3.coffee;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import java.sql.Connection;
+import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,14 +17,11 @@ public class CoffeeDao {
     private final NamedParameterJdbcTemplate jdbc;
 
     public CoffeeDao() throws SQLException {
-        final MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setURL("jdbc:mysql://localhost:32781/coffee");
-        dataSource.setUser("root");
-        dataSource.setPassword("Test123");
-        // Tests connection
-        final Connection con = dataSource.getConnection();
-        con.close();
-
+        final DataSource dataSource = DbUtilities.getDataSource(
+                "jdbc:mysql://localhost:3306/coffee",
+                "root",
+                "test123"
+        );
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }
 

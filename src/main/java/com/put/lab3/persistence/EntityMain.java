@@ -17,8 +17,12 @@ public class EntityMain {
     private static EntityManagerFactory emf;
     private static EntityManager entityManager;
 
-    private static void getAllCoffee() {
+    private static void init() {
+        emf = Persistence.createEntityManagerFactory("persistence");
         entityManager = getEntityManager();
+    }
+
+    private static void getAllCoffee() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<CoffeesEntity> cq = cb.createQuery(CoffeesEntity.class);
         Root<CoffeesEntity> rootEntry = cq.from(CoffeesEntity.class);
@@ -32,22 +36,33 @@ public class EntityMain {
         }
     }
 
+    private static CoffeesEntity getCoffee(String cofName, int supId) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CoffeesEntity> cq = cb.createQuery(CoffeesEntity.class);
+        Root<CoffeesEntity> root = cq.from(CoffeesEntity.class);
+
+        CriteriaQuery<CoffeesEntity> one = cq.select(root)
+                .where(cb.equal(root.get("cofName"), cofName), cb.equal(root.get("supId"), supId));
+
+        TypedQuery<CoffeesEntity> query = entityManager.createQuery(one);
+
+        return query.getSingleResult();
+    }
+
     private static void addCoffee(CoffeesEntity coffeesEntity) {
-        entityManager = getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(coffeesEntity);
         entityManager.getTransaction().commit();
     }
 
-    private static void removeCoffee(CoffeesEntity coffeesEntity) {
-        entityManager = getEntityManager();
+    private static void removeCoffee(String cofName, int supId) {
+        CoffeesEntity coffeesEntity = getCoffee(cofName, supId);
         entityManager.getTransaction().begin();
         entityManager.remove(coffeesEntity);
         entityManager.getTransaction().commit();
     }
 
     public static void main(String[] args) {
-        emf = Persistence.createEntityManagerFactory("persistence");
         CoffeesEntity coffee = CoffeesEntity.builder()
                 .cofName("bla")
                 .supId(49)
@@ -60,13 +75,13 @@ public class EntityMain {
         addCoffee(coffee);
         System.out.println();
         getAllCoffee();
-        removeCoffee(coffee);
+        removeCoffee(coffee.getCofName(), coffee.getSupId());
         System.out.println();
         getAllCoffee();
 
     }
 
-    static EntityManager getEntityManager() {
+    private static EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 

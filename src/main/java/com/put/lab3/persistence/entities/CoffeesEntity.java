@@ -18,6 +18,18 @@ public class CoffeesEntity {
     private int sales;
     private int total;
 
+    public CoffeesEntity() {
+
+    }
+
+    public CoffeesEntity(String cofName, int supId, BigDecimal price, int sales, int total) {
+        this.cofName = cofName;
+        this.supId = supId;
+        this.price = price;
+        this.sales = sales;
+        this.total = total;
+    }
+
     @Id
     @Column(name = "COF_NAME")
     public String getCofName() {

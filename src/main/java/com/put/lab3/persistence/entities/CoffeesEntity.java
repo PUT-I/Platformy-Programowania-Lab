@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 @ToString
 @Builder
-@Table(name = "COFFEES", schema = "coffee")
+@Table(name = "COFFEES", schema = "public")
 public class CoffeesEntity {
     private String cofName;
     private int supId;

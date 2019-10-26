@@ -71,34 +71,27 @@ class Controller implements Initializable {
         }
     }
 
+    private int extractChartType() {
+        switch (chartType.getValue()) {
+            case "Area chart":
+                return FunctionChart.AREA_CHART
+            case "Point chart":
+                return FunctionChart.POINT_CHART
+            default:
+                return FunctionChart.LINE_CHART
+        }
+    }
+
     private void createChart(double a, double b, double c) {
         final int range = range.getValue().toInteger()
 
-        int chartTypeValue = FunctionChart.LINE_CHART
-        switch (chartType.getValue()) {
-            case "Line chart":
-                chartTypeValue = FunctionChart.LINE_CHART
-                break
-            case "Area chart":
-                chartTypeValue = FunctionChart.AREA_CHART
-                break
-            case "Point chart":
-                chartTypeValue = FunctionChart.POINT_CHART
-                break
+        int chartTypeValue = extractChartType()
+
+        Chart chart = FunctionChart.createChart(-range, range, chartTypeValue) {
+            double x -> return a * x**2 + b * x + c
         }
-        Chart chart =
-                FunctionChart.createChart(-range, range, chartTypeValue,
-                        { double x -> return a * x**2 + b * x + c })
         chart.setId('chart')
-        Chart oldChart = null
-        for (Node node in grid.getChildren()) {
-            if (node.id == 'chart') {
-                oldChart = (Chart) node
-            }
-        }
-        if (oldChart != null) {
-            grid.getChildren().remove(oldChart)
-        }
+        grid.getChildren().removeIf { Node node -> node.id == 'chart' }
         grid.add(chart, 0, 1, 3, 2)
     }
 

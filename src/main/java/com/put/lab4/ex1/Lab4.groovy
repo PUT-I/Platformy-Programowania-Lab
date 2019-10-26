@@ -17,14 +17,18 @@ class Lab4 extends Application {
     }
 
     static void ex1() {
-        Chart chartA =
-                FunctionChart.createLineChart(-1, 1, { double x -> return 0 })
-        Chart chartB =
-                FunctionChart.createLineChart(-4, 4, { double x -> return -(x**2) })
-        Chart chartC = FunctionChart.createChart(-4, 4, FunctionChart.AREA_CHART,
-                { double x -> return -(x**2) - x + 3 })
-        Chart chartD = FunctionChart.createChart(-4, 4, FunctionChart.POINT_CHART,
-                { double x -> return Math.sin(x) })
+        Chart chartA = FunctionChart.createLineChart(-1, 1) {
+            double x -> return 0
+        }
+        Chart chartB = FunctionChart.createLineChart(-4, 4) {
+            double x -> return -(x**2)
+        }
+        Chart chartC = FunctionChart.createChart(-4, 4, FunctionChart.AREA_CHART) {
+            double x -> return -(x**2) - x + 3
+        }
+        Chart chartD = FunctionChart.createChart(-4, 4, FunctionChart.POINT_CHART) {
+            double x -> return Math.sin(x)
+        }
 
         createStageWithChart(chartA, "Chart A")
         createStageWithChart(chartB, "Chart B")

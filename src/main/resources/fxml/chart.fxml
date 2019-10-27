@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.put.lab4.fxml.Controller">
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.put.lab4.ex2.Controller">
     <GridPane fx:id="grid" prefHeight="600.0" prefWidth="800.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

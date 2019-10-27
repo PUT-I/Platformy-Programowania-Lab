@@ -20,7 +20,7 @@ public class CoffeeDao {
         final DataSource dataSource = DbUtilities.getDataSource(
                 "jdbc:mysql://localhost:3306/coffee",
                 "root",
-                "test123"
+                "root"
         );
         this.jdbc = new NamedParameterJdbcTemplate(dataSource);
     }

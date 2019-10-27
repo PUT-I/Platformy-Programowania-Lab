@@ -1,4 +1,4 @@
-package com.put.lab4.fxml
+package com.put.lab4.ex2
 
 import com.put.lab4.ex1.FunctionChart
 import javafx.beans.value.ChangeListener
